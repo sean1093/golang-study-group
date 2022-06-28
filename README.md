@@ -25,4 +25,4 @@ Resource: https://www.tenlong.com.tw/products/9789864761333
 
 ### 第二部分: Project Sharing
 
-TBD
+ChengYing - Hello World
