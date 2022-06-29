@@ -1,7 +1,12 @@
 # golang-study-group
 The Golang study group
 
-Resource: https://www.tenlong.com.tw/products/9789864761333
+Reading Resource: 
+https://www.tenlong.com.tw/products/9789864761333
+
+- Share notes: `/Notes`
+- Project sharing: `/Project`
+
 
 ## 進度規劃
 
@@ -24,5 +29,8 @@ Resource: https://www.tenlong.com.tw/products/9789864761333
 | Chapter 13 低階程式設計 | Jean || |
 
 ### 第二部分: Project Sharing
+
+| Project | Owner | Date | Reference
+|  ---- | ---- | ---- | ---- |
 
 TBD
