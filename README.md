@@ -14,19 +14,19 @@ https://www.tenlong.com.tw/products/9789864761333
 
 | 章節 | Owner | Date | Reference
 |  ---- | ---- | ---- | ---- |
-| Chapter 1 基本入門 | Yvonne | | |
-| Chapter 2 程式結構 | Summer || |
-| Chapter 3 基本資料型別 | Judy || |
-| Chapter 4 組合型別 | Sean || |
-| Chapter 5 函式 | Shawn || |
-| Chapter 6 方法 | Stanley || |
-| Chapter 7 介面 | Barney || |
-| Chapter 8 Goroutine 與 Channel | Sunny || |
-| Chapter 9 共用變數並行性 | Gordon || |
-| Chapter 10 套件與工具 | Jenny || |
-| Chapter 11 測試 | Menghan || |
-| Chapter 12 反射 | Steve || |
-| Chapter 13 低階程式設計 | Jean || |
+| Chapter 1 基本入門 | Yvonne | | [Chapter 1 基本入門](Notes/Chapter%201%20基本入門.md)|
+| Chapter 2 程式結構 | Summer || [Chapter 2 程式結構](Notes/Chapter%202%20程式結構.md)|
+| Chapter 3 基本資料型別 | Judy || [Chapter 3 基本資料型別](Notes/Chapter%203%20基本資料型別.md)|
+| Chapter 4 組合型別 | Sean || [Chapter 4 組合型別](Notes/Chapter%204%20組合型別.md)|
+| Chapter 5 函式 | Shawn || [Chapter 5 函式](Notes/Chapter%205%20函式.md)|
+| Chapter 6 方法 | Stanley || [Chapter 6 方法](Notes/Chapter%206%20方法.md)|
+| Chapter 7 介面 | Barney || [Chapter 7 介面](Notes/Chapter%207%20介面.md)|
+| Chapter 8 Goroutine 與 Channel | Sunny || [Chapter 8 Goroutine 與 Channel](Notes/Chapter%208%20Goroutine%20與%20Channel.md)|
+| Chapter 9 共用變數並行性 | Gordon || [Chapter 9 共用變數並行性](Notes/Chapter%209%20共用變數並行性.md)|
+| Chapter 10 套件與工具 | Jenny || [Chapter 10 套件與工具](Notes/Chapter%2010%20套件與工具.md)|
+| Chapter 11 測試 | Menghan || [Chapter 11 測試](Notes/Chapter%2011%20測試.md)|
+| Chapter 12 反射 | Steve || [Chapter 12 反射](Notes/Chapter%2012%20反射.md)|
+| Chapter 13 低階程式設計 | Jean || [Chapter 13 低階程式設計](Notes/Chapter%2013%20低階程式設計.md)|
 
 ### 第二部分: Project Sharing
 
