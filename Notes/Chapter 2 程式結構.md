@@ -219,7 +219,7 @@ func main() {
 boiling point = 212 F or 100C
 ```
 
-短變數的宣告可同時做變數宣告和指派，但至少有一個新的變數宣告。
+短變數的宣告可同時做變數宣告和指派，但至少有一個新的變數宣告。例如：最初先宣告兩個變數 hello 和 world，然後接下來宣告一個新的變數 hi 並且 assign 值給 world，這樣就最少有宣告一個新的變數。
 
 ```go
 hello, world := "hello", "world"
