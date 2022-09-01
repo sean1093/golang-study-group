@@ -784,10 +784,10 @@ package tempconv
 import "fmt"
 
 type Celsius float64
-type KELVIN float64
+type Kelvin float64
 
 const (
-	AbsoluteZeroK KELVIN = -273.15
+	AbsoluteZeroK Kelvin = -273.15
 )
 ```
 
@@ -796,11 +796,11 @@ const (
 ```go
 package tempconv
 
-func CToK(c Celsius) KELVIN {
-  return KELVIN(c)
+func CToK(c Celsius) Kelvin {
+  return Kelvin(c)
 }
 
-func KToC(k KELVIN) Celsius {
+func KToC(k Kelvin) Celsius {
   return Celsius(k)
 }
 ```
