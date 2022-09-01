@@ -14,7 +14,7 @@
     - 函式：make、len、cap、new、append、copy、close、delete、complex、real、img、panic、recover
 - 變數的可視範圍：local vs global
 
-  - local：函式內宣告，函式內可見。
+  - local：函式內宣告，函式內可見。例如：x 宣告在 main 裡面，helloworld 裡面就看不見。
 
   ```go
   package main
@@ -30,7 +30,7 @@
   }
   ```
 
-- global：函式外宣告，所屬 package 的全部檔案都可看見。
+- global：函式外宣告，所屬 package 的全部檔案都可看見。例如：x 宣告在 package 層級，main 和 helloworld 裡面都可以看見。
 
   ```go
   package main
