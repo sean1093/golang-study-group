@@ -14,7 +14,7 @@
     - 函式：make、len、cap、new、append、copy、close、delete、complex、real、img、panic、recover
 - 變數的可視範圍：local vs global
 
-  - local：函式內宣告，函式內可見。
+  - local：函式內宣告，函式內可見。例如：x 宣告在 main 裡面，helloworld 裡面就看不見。
 
   ```go
   package main
@@ -30,7 +30,7 @@
   }
   ```
 
-- global：函式外宣告，所屬 package 的全部檔案都可看見。
+- global：函式外宣告，所屬 package 的全部檔案都可看見。例如：x 宣告在 package 層級，main 和 helloworld 裡面都可以看見。
 
   ```go
   package main
@@ -219,7 +219,7 @@ func main() {
 boiling point = 212 F or 100C
 ```
 
-短變數的宣告可同時做變數宣告和指派，但至少有一個新的變數宣告。
+短變數的宣告可同時做變數宣告和指派，但至少有一個新的變數宣告。例如：最初先宣告兩個變數 hello 和 world，然後接下來宣告一個新的變數 hi 並且 assign 值給 world，這樣就最少有宣告一個新的變數。
 
 ```go
 hello, world := "hello", "world"
@@ -240,7 +240,7 @@ hi = hi
 
 ### 3-4 指標
 
-指標指向某個變數，存的是變數的位置。
+指標指向某個變數，存的是變數的位址。
 
 範例如下
 
@@ -270,7 +270,7 @@ p = 824633835680
 x = 2
 ```
 
-每次宣告變數都會存在不同的位置。
+每次宣告變數都會存在不同的位址。
 
 ```go
 func f() *int {
@@ -287,7 +287,7 @@ fmt.Println(f() == f()) // false
 false
 ```
 
-利用變數的位置間接修改其值。
+利用變數的位址間接修改其值。
 
 範例如下
 
@@ -784,10 +784,10 @@ package tempconv
 import "fmt"
 
 type Celsius float64
-type KELVIN float64
+type Kelvin float64
 
 const (
-	AbsoluteZeroK KELVIN = -273.15
+	AbsoluteZeroK Kelvin = -273.15
 )
 ```
 
@@ -796,11 +796,11 @@ const (
 ```go
 package tempconv
 
-func CToK(c Celsius) KELVIN {
-  return KELVIN(c)
+func CToK(c Celsius) Kelvin {
+  return Kelvin(c)
 }
 
-func KToC(k KELVIN) Celsius {
+func KToC(k Kelvin) Celsius {
   return Celsius(k)
 }
 ```
