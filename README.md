@@ -14,9 +14,9 @@ https://www.tenlong.com.tw/products/9789864761333
 
 | 章節 | Owner | Date | Reference
 |  ---- | ---- | ---- | ---- |
-| Chapter 1 基本入門 | Yvonne | | [Chapter 1 基本入門](Notes/Chapter%201%20基本入門.md)|
-| Chapter 2 程式結構 | Summer || [Chapter 2 程式結構](Notes/Chapter%202%20程式結構.md)|
-| Chapter 3 基本資料型別 | Judy || [Chapter 3 基本資料型別](Notes/Chapter%203%20基本資料型別.md)|
+| Chapter 1 基本入門 | Yvonne |2022-08-18| [Chapter 1 基本入門](Notes/Chapter%201%20基本入門.md)|
+| Chapter 2 程式結構 | Summer |2022-09-01| [Chapter 2 程式結構](Notes/Chapter%202%20程式結構.md)|
+| Chapter 3 基本資料型別 | Judy |2022-09-15| [Chapter 3 基本資料型別](Notes/Chapter%203%20基本資料型別.md)|
 | Chapter 4 組合型別 | Sean || [Chapter 4 組合型別](Notes/Chapter%204%20組合型別.md)|
 | Chapter 5 函式 | Shawn || [Chapter 5 函式](Notes/Chapter%205%20函式.md)|
 | Chapter 6 方法 | Stanley || [Chapter 6 方法](Notes/Chapter%206%20方法.md)|
@@ -32,5 +32,3 @@ https://www.tenlong.com.tw/products/9789864761333
 
 | Project | Owner | Date | Reference
 |  ---- | ---- | ---- | ---- |
-
-TBD
