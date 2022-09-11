@@ -1,6 +1,6 @@
 # Ch3. 基本資料型別
 
-包含：數字，字串和布林。
+包含：數字、字串和布林。
 
 ## 3.1 整數
 
@@ -823,6 +823,225 @@ func main() {
 
 ## 3.6 常數
 
+- 常數是編譯器已知值的運算式，其求值保證發生在編譯期而非執行期，每個常數的底層型別是基本型別：布林、字串或數字。
+- 用 `const` 來宣告常數，其值不便，可防止在程式執行期間意外或蓄意修改。例如：常數比變數更適合圓周率等數學常數，因為他的值不會改變：
+
+    ```go
+    const pi = 3.14159  // 近似值, math.Pi 是更好的近似值
+    ```
+
+    也可以一次宣告多個常數：
+
+    ```go
+    const (
+        e  = 2.71828182845904523536028747135266249775724709369995957496696763
+        pi = 3.14159265358979323846264338327950288419716939937510582097494459
+    )
+    ```
+
+- 許多長數計算可以完全在編譯期完成，減少執行期的工作，減少執行期的工作，也使其他編譯器最佳化得以執行。
+- 運算元為常數時，除以零、字串索引超出範圍和任何會導致非有限值的浮點數運算等執行期的錯誤也能夠在編譯期被發現。
+- 常數的數學、邏輯運算和比較運算的結果也數常數，轉換與呼叫 len, cap, real, imag, complex 和 unsafe.Sizeof 等特定內建函式的結果也是常數。
+- 因為編譯器知道常數的值，所以常數運算式可以出現在型別，特別是陣列長度：
+
+    ```go
+    const IPv4Len = 4
+
+    // parseIPv4 parses an IPv4 address (d.d.d.d).
+    func parseIPv4(s string) IP {
+        var p [IPv4Len]byte
+        // ...
+    }
+    ```
+
+- 常數宣告可以指定型別，但沒有明確指定型別時，其型別由運算式右邊決定。例如以下範例，`time.Duration` 是具名型別，其底層型別為 `int64`, 而 `time.Minute` 是該型別的常數，因此底下兩個常數的型別為 `time.Duration`:
+
+    ```go
+    const noDelay time.Duration = 0
+    const timeout = 5 * time.Minute
+    fmt.Printf("%T %[1]v\n", noDelay)     // "time.Duration 0"
+    fmt.Printf("%T %[1]v\n", timeout)     // "time.Duration 5m0s"
+    fmt.Printf("%T %[1]v\n", time.Minute) // "time.Duration 1m0s"
+    ```
+
+- 當一系列的常數一起宣告時，除了第一個之外，右手邊的運算式可以省略，表示重複使用前一個運算式與它的型別：
+
+    ```go
+    const (
+        a = 1
+        b
+        c = 2
+        d
+    )
+
+    fmt.Println(a, b, c, d) // "1 1 2 2"
+    ```
+
 ### 3.6.1 iota 常數產生器
 
+- `const` 宣告可以使用 iota 常數產生器，他建構一系列相關值而無需明確的指定。
+- 在 `const` 宣告中，iota 值從零開始對序列中的每個元素遞增。以下範例是來自 time 套件，它從 Sunday 的零開始為一週的每一天定義 Weekday 型別的具名常數，這種型別通常稱為列舉 (enumeration), 簡稱 `enum`.
+
+    ```go
+    type Weekday int
+
+    const (
+        Sunday Weekday = iota
+        Monday
+        Tuesday
+        Wednesday
+        Thursday
+        Friday
+        Saturday
+    )
+    ```
+
+- 也可以在更複雜的運算式中使用 iota, 以下範例來自 net 套件，讓一個無正負號整數的 5 個啲位元指定不同的名稱與布林解譯：
+
+    ```go
+    type Flags uint
+
+    const (
+        FlagUp Flags = 1 << iota // 位移
+        FlagBroadcast            // 支援 broadcast
+        FlagLoopback             // loopback interface
+        FlagPointToPoint         // belongs to a point-to-point link
+        FlagMulticast            // 支援 multicast access capability
+    )
+    ```
+
+    隨著 iota 遞增，每個常數被指派為 1 << iota 的值，它求出乘以二的值，對應到每一個位元。我們可以在測試、設定或清除這些位元的函式中使用這些常數：
+
+    ```go
+    func IsUp(v Flags) bool     { return v&FlagUp == FlagUp }
+    func TurnDown(v *Flags)     { *v &^= FlagUp }
+    func SetBroadcast(v *Flags) { *v |= FlagBroadcast }
+    func IsCast(v Flags) bool   { return v&(FlagBroadcast|FlagMulticast) != 0 }
+
+    unc main() {
+        var v Flags = FlagMulticast | FlagUp
+        fmt.Printf("%b %t\n", v, IsUp(v)) // "10001 true"
+        TurnDown(&v)
+        fmt.Printf("%b %t\n", v, IsUp(v)) // "10000 false"
+        SetBroadcast(&v)
+        fmt.Printf("%b %t\n", v, IsUp(v))   // "10010 false"
+        fmt.Printf("%b %t\n", v, IsCast(v)) // "10010 true"
+    }
+    ```
+
+    以下更複雜的 iota 宣告範例，每個常數都是 1024 的的冪次方：
+
+    ```go
+    const (
+        _ = 1 << (10 * iota)
+        KiB // 1024
+        MiB // 1048576
+        GiB // 1073741824
+        TiB // 1099511627776             (exceeds 1 << 32)
+        PiB // 1125899906842624
+        EiB // 1152921504606846976
+        ZiB // 1180591620717411303424    (exceeds 1 << 64)
+        YiB // 1208925819614629174706176
+    )
+    ```
+
+    不過 iota 有也限制，例如它不能產生 1000 的乘積，因為沒有指數運算子。
+
 ### 3.6.2 無型別常數
+
+Go 的常數有一點不尋常。雖然常數可以是任何基本資料型別，例如 `int` 或 `float64`, 包含 `time.Duration` 等具名基本型別，許多常數並不屬於特定型別。編譯器將這些無型別常數以比基本型別值更高的數值精確度表示，且對它們的數學運算比機器運算的精確度更高，可以假設致紹有 256 個位元精確度。
+
+- 無型別常數有六種：無型別布林、無型別整數、無型別浮點數、無型別複數和無型別字串。
+- 藉由無歸屬型別，無型別常數不只維持高精確度，它還可以參與比有歸屬常數更多的運算式而不需要轉換。例如上面範例的 ZiB 和 YiB 值對任何整數型別來說都太大，但他們是合法的常數，可用於如下運算式：
+
+    ```go
+    fmt.Println(YiB/ZiB) // 1024
+    ```
+
+    另一個粒字是福點數常數 `math.Pi` 可用於任何需要浮點數或複數的地方：
+
+    ```go
+    var x float32 = math.Pi
+    var y float64 = math.Pi
+    var z complex128 = math.Pi
+    ```
+
+    如果 `math.Pi` 屬於 `float64` 等特定型別，其結果可能不會有此精確度，且在需要 `float32` 或 `complex128` 時需要做型別轉換：
+
+    ```go
+    const Pi64 float64 = math.Pi
+
+    var x float32 = float32(Pi64)
+    var y float64 = Pi64
+    var z complex128 = complex128(Pi64)
+    ```
+
+    對實字來說，語法決定結果。0, 0.0, 0i 和 \u0000 都表示同一個值的常數，但結果不同：無型別整數、無型別浮點數、無型別複數、無型別 rune. 同樣的， true 和 false 是無型別布林，而字串實字是無型別字串。
+
+- `/` 運算符會依據運算元的類型而產生相對應類型的結果，因此實字的選擇可影響常數除法運算式的結果：
+
+    ```go
+    var f float64 = 212
+    fmt.Println((f - 32) * 5 / 9)     // "100"; (f - 32) * 5 is a float64
+    fmt.Println(5 / 9 * (f - 32))     // "0";   5/9 是無型別整數 0
+    fmt.Println(5.0 / 9.0 * (f - 32)) // "100"; 5.0/9.0 是無型別浮點數
+    ```
+
+- 只有常數可以是無型別，如下方第一個陳述，無型別常數出現在直接宣告型別的變數的右手邊，或如其他陳述指派給變數時，常數會間接轉換成該變數的型別：
+
+    ```go
+    var f float64 = 3 + 0i // untyped complex -> float64
+    f = 2                  // untyped integer -> float64
+    f = 1e123              // untyped floating-point -> float64
+    f = 'a'                // untyped rune -> float64
+    ```
+
+    上面的陳述相當於：
+
+    ```go
+    var f float64 = float64(3 + 0i)
+    f = float64(2)
+    f = float64(1e123)
+    f = float64('a')
+    ```
+
+    無論是直接或間接，常數從一個型別轉換成另一個型別，目標型別必須可以表示原始值。浮點實數和複數允許捨入：
+
+    ```go
+    const (
+        deadbeef = 0xdeadbeef // 無型別整數值 3735928559
+        a = uint32(deadbeef)  // uint32 值 3735928559
+        b = float32(deadbeef) // float32 值 3735928576 (rounded up)
+        c = float64(deadbeef) // float64 值 3735928559 (精確)
+        d = int32(deadbeef)   // compile error: constant overflows int32
+        e = float64(1e309)    // compile error: constant overflows float64
+        f = uint(-1)          // compile error: uint 常數低溢位
+    )
+    ```
+
+- 在沒有明確型別的變數宣告中（包括短變數宣告），無型別常數間接決定該變數的預設值，例如：
+
+    ```go
+    i := 0      // untyped integer;        implicit int(0)
+    r := '\000' // untyped rune;           implicit rune('\000')
+    f := 0.0    // untyped floating-point; implicit float64(0.0)
+    c := 0i     // untyped complex;        implicit complex128(0i)
+    ```
+
+    注意此不對稱：無型別整數轉換成 int, 其大小沒有保證，但無型別浮點數與複數轉換成明確大小的 float64 和 complex128. Go 語言本身沒有無大小的 float 和 complex 型別，因為不知道浮點數資料型別很難寫出正確的數學演算法。
+
+- 如果要變數不同的型別，我們必須明確轉換無型別常數成所需型別或在變數宣告中多表示所需型別，例如：
+
+    ```go
+    var i = int8(0)
+    var i int8 = 0
+    ```
+
+    這些預設在轉換無型別常數到介面值時特別重要，因為它們決定它的動態型別。
+
+    ```go
+    fmt.Printf("%T\n", 0)      // "int"
+    fmt.Printf("%T\n", 0.0)    // "float64"
+    fmt.Printf("%T\n", 0i)     // "complex128"
+    fmt.Printf("%T\n", '\000') // "int32" (rune)
+    ```
