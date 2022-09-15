@@ -4,7 +4,7 @@
 
 ## 3.1 整數
 
-- 帶正負號的整數有四種大小：8, 16, 32 和 64 位元，分別是 `int8`, `int16`, `int32` 和 `int64`，對應的無正負號型別是 `unit8`, `unit16`, `uint32` 和 `uint64`. 另外還有 `int` 和 `uint` 是特定平台上自然且大小最有效率的有正負號及無正負號整數。
+- 帶正負號的整數有四種大小：8, 16, 32 和 64 位元，分別是 `int8`, `int16`, `int32` 和 `int64`，對應的無正負號型別是 `uint8`, `uint16`, `uint32` 和 `uint64`. 另外還有 `int` 和 `uint` 是特定平台上自然且大小最有效率的有正負號及無正負號整數。
 - `rune` 是 `int32` 的同義詞，用來只是該值為 Unicode, 兩者名稱可以交換使用。
 - `byte` 為 `uint8` 同義詞，強調該值為原始資料而非數值。
 - 無正負號型別 `uintptr`, 它的大小並未指定，但足夠保存指標值的所有位元。只用於低階程式設計，例如 Go 和 C library 或 OS 的介接。
@@ -825,7 +825,7 @@ func main() {
 ## 3.6 常數
 
 - 常數是編譯器已知值的運算式，其求值保證發生在編譯期而非執行期，每個常數的底層型別是基本型別：布林、字串或數字。
-- 用 `const` 來宣告常數，其值不便，可防止在程式執行期間意外或蓄意修改。例如：常數比變數更適合圓周率等數學常數，因為他的值不會改變：
+- 用 `const` 來宣告常數，其值不變，可防止在程式執行期間意外或蓄意修改。例如：常數比變數更適合圓周率等數學常數，因為他的值不會改變：
 
     ```go
     const pi = 3.14159  // 近似值, math.Pi 是更好的近似值
@@ -903,11 +903,11 @@ func main() {
     type Flags uint
 
     const (
-        FlagUp Flags = 1 << iota // 位移
-        FlagBroadcast            // 支援 broadcast
-        FlagLoopback             // loopback interface
-        FlagPointToPoint         // belongs to a point-to-point link
-        FlagMulticast            // 支援 multicast access capability
+        FlagUp Flags = 1 << iota // 位移, 1 << 0
+        FlagBroadcast            // 1 << 1, 支援 broadcast
+        FlagLoopback             // 1 << 2, loopback interface
+        FlagPointToPoint         // 1 << 3, belongs to a point-to-point link
+        FlagMulticast            // 1 << 4, 支援 multicast access capability
     )
     ```
 
