@@ -54,3 +54,146 @@ b := [4]int{1, 2, 3, 4}
 fmt.Println(a == b)
 // invalid operation: cannot compare a == b (mismatched types [3]int and [4]int) 
 ```
+
+## 4.2 Slice
+
+- 可變的長度序列
+- 本身不儲存值，而是儲存到陣列的參考 (reference)
+- 三元件：
+    - 指標：指向陣列中可以從 slice 存取的第一個元素 (不一定是陣列第一個元素)
+    - 長度：Slice 元素數量 (不能超過容量)
+    - 容量：Slice 元素最大容量
+    - 內建 len, cap 函式可以回傳值
+
+### 宣告
+
+#### 直接建立
+
+可以使用和陣列一樣的宣告方式，或是利用 make 來建立 slice
+
+```go
+// 和陣列一樣的宣告方式
+var a = [...]int{1, 2, 3}
+a := [...]int{1, 2, 3}
+
+// 使用 make 建立 slice
+// len=3 cap=3 default:[0,0,0]
+a := make([]int, 3)
+```
+
+#### 指定 array 位置
+
+指定 b 這個 slice 把指標這定在 a index=2 的位置
+- 修改 b, a 也會被修改
+
+```go
+b := a[2:3]
+```
+
+### Slice 特性
+
+#### 儲存陣列的參考
+
+傳遞 slice 給函式可以修改底層陣列元素
+
+```go
+// reverse reverses a slice of ints in place.
+func reverse(s []int) {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		s[i], s[j] = s[j], s[i]
+	}
+}
+
+// reverse a
+a := [...]int{0, 1, 2, 3, 4, 5}
+reverse(a[:])
+fmt.Println(a) // "[5 4 3 2 1 0]"
+
+// reverse b from index 0 to index 2
+b := [...]int{0, 1, 2, 3, 4, 5}
+reverse(b[0:3])
+fmt.Println(b) // "[2 1 0 3 4 5]"
+
+```
+
+#### 不能比較
+
+slice 不能直接比較
+- 不能使用 `==`測試兩個 slice 是否帶有相同元素
+- slice([byte]) 可以使用 `btyes.Equal` 來比較
+- 其餘型別需自行寫 compare func
+
+測試一個 slice 是否為空
+- (O): len(s) == 0
+- (X): s == nil
+
+### append 函式
+
+內建的 append 函式可以對 slice 加入元素
+
+```go
+var x []int
+x = append(x, 1)
+fmt.Println(x) // [1]
+x = append(x, 2, 3)
+fmt.Println(x) // [1 2 3]
+x = append(x, x...)
+fmt.Println(x) // [1 2 3 1 2 3]
+```
+
+append 做了什麼事？
+以 `appendInt` 做範例解釋
+
+```go
+func appendInt(x []int, y int) []int {
+	var z []int
+	zlen := len(x) + 1
+	if zlen <= cap(x) {
+		// There is room to grow.  Extend the slice.
+		z = x[:zlen]
+	} else {
+		// There is insufficient space.  Allocate a new array.
+		// Grow by doubling, for amortized linear complexity.
+		zcap := zlen
+		if zcap < 2*len(x) {
+			zcap = 2 * len(x)
+		}
+		z = make([]int, zlen, zcap)
+		copy(z, x) // a built-in function; see text
+	}
+	z[len(x)] = y
+	return z
+}
+```
+
+#### 使用 slice and append 實作 stack
+
+- 初始為一個空 stack
+- 使用 append 來 push 新的值
+
+```go
+stack = append(stack, v) // push v
+```
+
+- get stack top
+```go
+top := stack[len(stack)-1] // stack's top
+```
+
+- pop element
+```go
+stack = stack[:len(stack)-1] // pop
+```
+
+```go
+var stack []int
+stack = append(stack, 1, 2, 3)
+fmt.Println(stack) // [1 2 3]
+top := stack[len(stack)-1]
+fmt.Println(top) // 3
+fmt.Println(stack) // [1 2 3]
+stack = stack[:len(stack)-1]
+fmt.Println(stack) // [1 2]
+```
+
+## 4.3 map
