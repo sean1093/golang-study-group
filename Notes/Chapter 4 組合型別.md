@@ -197,3 +197,111 @@ fmt.Println(stack) // [1 2]
 ```
 
 ## 4.3 map
+- 所有的 key 必須是一樣的型別
+- 所有的 value 必須是一樣的型別
+- key and value 不一定要是一樣的型別
+
+### 建立 map
+
+使用 make 內建函式
+
+```go
+// 宣告&建立一個 key 是 string, value 是 int 的 map
+ages := make(map[string]int)
+```
+
+建立 map with default value
+
+```go
+ages := map[string]int{
+	"alice": 31,
+    "charlie": 34
+}
+
+// 同等於使用 make 的方式
+ages := make(map[string]int)
+ages["alice"] = 31
+ages["charlie"] = 34
+```
+
+### map 元素操作
+
+刪除元素
+
+```go
+delete(ages, "alice")
+```
+
+對 value 操作
+
+```go
+// ages 中沒有 bob，會是預設的 int 也會是 0
+ages["bob"] = ages["bob"] + 1
+```
+
+縮寫形式的指派也可以使用
+```go
+ages["bob"] += 1
+ages["bob"]++
+```
+
+map 元素不是變數，不能取得位址
+
+```go
+_ = &ages["bob"] // 會編譯錯誤
+```
+
+列舉 map 中元素
+```go
+// 
+for name, age := range ages {
+	fmt.Printf("%s\t%d\n", name, age) 
+}
+
+// 只拿 age 怎麼做?
+for age := range ages {
+	fmt.Printf("%d\n", age) // fmt.Printf format %d has arg age of wrong type string
+}
+
+// 只拿 age 要先忽略前面的 name(key)
+for _, age := range ages {
+	fmt.Printf("%d\n", age)
+}
+```
+
+### map 型別零值
+
+map 型別零值為 `nil`
+
+```go
+var ages map[string]int
+fmt.Println(ages == nil) // "true"
+fmt.Println(len(ages) == 0) // "true"
+
+// 如果存值到 nil map 會造成 panic
+ages["tom"] = 30 // panic: assignment to entry in nil map
+```
+
+因為預設為 0，所以不能用取值來判斷是否有這個 key
+
+```go
+ages := make(map[string]int)
+ages["alice"] = 31
+ages["charlie"] = 34
+
+age1 := ages["alice"]
+fmt.Printf("%d\n", age1)
+
+age2 := ages["bob"]
+fmt.Printf("%d\n", age2) // 0, 預設值
+```
+
+可改用：
+```go
+age2, ok := ages["bob"]
+if !ok {
+	fmt.Print("not a key\n")
+} else {
+	fmt.Printf("%d\n", age2)
+}
+```
