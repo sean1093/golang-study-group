@@ -305,3 +305,133 @@ if !ok {
 	fmt.Printf("%d\n", age2)
 }
 ```
+
+## 4.4 struct
+
+- 集合資料型別
+- 類似 Object
+
+### 宣告與定義
+
+使用 type 和 struct 來做定義
+
+```go
+type Employee struct {
+	ID         int
+	Name       string
+	Address    string
+	DoB        time.Time
+	Position   string
+	Salary     int
+	ManagerId  int
+}
+
+var tom Employee
+```
+
+### 存取
+
+可直接對值做存取或是對指標做存取
+
+```go
+tom.Salary += 5000
+
+position := &tom.Salary
+*position += 5000
+```
+
+沒有欄位(值)的 struct 型別稱為空 struct
+- 大小為零
+- 不帶有資訊
+
+```go
+struct{}
+```
+
+### 匯出與暴露
+
+struct 名稱首字母小寫
+
+- 這個struct不會被匯出
+- 內部所有欄位都不會匯出
+- 有首字母大寫的欄位名也不會被匯出
+
+struct 名稱首字母大寫
+
+- struct會被匯出
+- 只匯出內部首字母大寫的欄位
+
+### 不具名欄位
+
+有一組定義:
+
+```go
+type Point struct {
+	X, Y int
+}
+
+type Circle struct {
+	Center Point
+	Radius int
+}
+
+type Wheel struct {
+	Circle Circle
+	Spokes int
+}
+```
+
+如果要改變 `Wheel` 的欄位:
+
+```go
+var w Wheel
+w.Circle.Center.X = 8
+w.Circle.Center.Y = 8
+w.Circle.Radius = 5
+w.Spokes = 20
+```
+
+如果宣告沒有名稱的欄位(拿掉Center 和 Circle這兩個名稱)
+
+```go
+type Point struct {
+	X, Y int
+}
+
+type Circle struct {
+	Point
+	Radius int
+}
+
+type Wheel struct {
+	Circle
+	Spokes int
+}
+```
+
+這時候要改變 `Wheel` 的欄位就會變簡潔
+
+```go
+var w Wheel
+w.X = 8
+w.Y = 8
+w.Radius = 5
+w.Spokes = 20
+```
+
+但要注意：
+- 不能有兩個相同型別的不具名欄位 => 會衝突
+
+## 4.5 JSON
+
+- 從 go 的資料結構轉換成 JSON 被稱為 marshaling，透過 json.marshal 完成
+- json.marshal 可以產生整齊縮排的 JSON
+- marshaling 使用 struct 的欄位名稱作為 JSON 的物件名稱，且只有匯出的欄位會被 marshal
+
+```go
+Year int `json:"released"`
+Color bool `json:"color,omitempty"`
+// omitempty 表示如果欄位為其型別的零值或是空，就不輸出
+```
+
+- 將 JSON 解碼並產生 Go 的資料結構稱為 unmarshaling，透過 json.unmarshal 完成
