@@ -7,6 +7,13 @@
 
 ### 宣告陣列
 
+- n: 長度
+- type: 元素型態
+
+```go
+var array [n]type
+```
+
 宣告一個長度為 3 內容元素皆為 int 的 a 陣列
 
 ```go
@@ -32,6 +39,13 @@ a := [...]int{1, 2, 3}
 a := [...]int{3: 2, 5: 1}
 fmt.Println(a) // [0 0 0 2 0 1]
 ```
+
+也可宣告多個維度，舉例來說: 宣告一個二維陣列
+
+```go
+a := [2][3]int{{1, 2, 3}, {4, 5, 6}}
+```
+
 ### 陣列型別
 
 陣列的大小也是型別的一部分，`[3]int` 與 `[4]int` 是不同型別，不能互相指派值，也不能互相比較，在 compiler 就會報錯
@@ -55,6 +69,19 @@ fmt.Println(a == b)
 // invalid operation: cannot compare a == b (mismatched types [3]int and [4]int) 
 ```
 
+### 陣列操作
+
+取得陣列長度: `len()` and `cap()`
+
+- len(): 取得 array 或 slice 的長度
+- cap(): 取得 array 或 slice 的容量
+
+```go
+a := [3]int{}
+fmt.Println(len(a), cap(a)) // 3, 3
+```
+
+
 ## 4.2 Slice
 
 - 可變的長度序列
@@ -69,14 +96,14 @@ fmt.Println(a == b)
 
 #### 直接建立
 
-可以使用和陣列一樣的宣告方式，或是利用 make 來建立 slice
+可以使用和陣列一樣的宣告方式，或是利用 make 來動態建立 slice
 
 ```go
 // 和陣列一樣的宣告方式
 var a = [...]int{1, 2, 3}
 a := [...]int{1, 2, 3}
 
-// 使用 make 建立 slice
+// 使用 make 動態建立 slice
 // len=3 cap=3 default:[0,0,0]
 a := make([]int, 3)
 ```
@@ -424,8 +451,10 @@ w.Spokes = 20
 
 ## 4.5 JSON
 
-- 從 go 的資料結構轉換成 JSON 被稱為 marshaling，透過 json.marshal 完成
-- json.marshal 可以產生整齊縮排的 JSON
+### marshaling
+
+- 從 go 的資料結構轉換成 JSON 被稱為 marshaling，透過 `json.Marshal` 完成
+- `json.MarshalIndent` 可以產生整齊縮排的 JSON
 - marshaling 使用 struct 的欄位名稱作為 JSON 的物件名稱，且只有匯出的欄位會被 marshal
 
 ```go
@@ -434,4 +463,43 @@ Color bool `json:"color,omitempty"`
 // omitempty 表示如果欄位為其型別的零值或是空，就不輸出
 ```
 
-- 將 JSON 解碼並產生 Go 的資料結構稱為 unmarshaling，透過 json.unmarshal 完成
+定義一個 `Movie` 的 struct 與其資料內容:
+
+```go
+type Movie struct {
+	Title  string
+	Year   int  `json:"released"`
+	Color  bool `json:"color,omitempty"`
+	Actors []string
+}
+
+var movies = []Movie{
+	{Title: "Casablanca", Year: 1942, Color: false,
+		Actors: []string{"Humphrey Bogart", "Ingrid Bergman"}},
+	{Title: "Cool Hand Luke", Year: 1967, Color: true,
+		Actors: []string{"Paul Newman"}},
+	{Title: "Bullitt", Year: 1968, Color: true,
+		Actors: []string{"Steve McQueen", "Jacqueline Bisset"}},
+	// ...
+}
+```
+
+直接使用 `Marshal` 來對剛剛的 `movies` 作轉換
+
+```go
+data, err := json.Marshal(movies)
+if err != nil {
+	log.Fatalf("JSON marshaling failed: %s", err)
+}
+fmt.Printf("%s\n", data)
+```
+
+上面就可以印出以下的 `JSON`
+
+```json
+[{"Title":"Casablanca","released":1942,"Actors":["Humphrey Bogart","Ingrid Bergman"]},{"Title":"Cool Hand Luke","released":1967,"color":true,"Actors":["Paul Newman"]},{"Title":"Bullitt","released":1968,"color":true,"Actors":["Steve McQueen","Jacqueline Bisset"]}]
+```
+
+### unmarshaling
+
+- 將 JSON 解碼並產生 Go 的資料結構稱為 unmarshaling，透過 json.Unmarshal 完成
