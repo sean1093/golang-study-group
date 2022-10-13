@@ -24,7 +24,7 @@ https://www.tenlong.com.tw/products/9789864761333
 | Chapter 8 Goroutine 與 Channel | Sunny || [Chapter 8 Goroutine 與 Channel](Notes/Chapter%208%20Goroutine%20與%20Channel.md)|
 | Chapter 9 共用變數並行性 | Gordon || [Chapter 9 共用變數並行性](Notes/Chapter%209%20共用變數並行性.md)|
 | Chapter 10 套件與工具 | Jenny || [Chapter 10 套件與工具](Notes/Chapter%2010%20套件與工具.md)|
-| Chapter 11 測試 | Menghan || [Chapter 11 測試](Notes/Chapter%2011%20測試.md)|
+| Chapter 11 測試 | Cheng-Ying || [Chapter 11 測試](Notes/Chapter%2011%20測試.md)|
 | Chapter 12 反射 | Steve || [Chapter 12 反射](Notes/Chapter%2012%20反射.md)|
 | Chapter 13 低階程式設計 | Jean || [Chapter 13 低階程式設計](Notes/Chapter%2013%20低階程式設計.md)|
 
