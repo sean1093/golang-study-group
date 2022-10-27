@@ -19,7 +19,7 @@ https://www.tenlong.com.tw/products/9789864761333
 | Chapter 3 基本資料型別 | Judy |2022-09-15| [Chapter 3 基本資料型別](Notes/Chapter%203%20基本資料型別.md)|
 | Chapter 4 組合型別 | Sean |2022-09-29| [Chapter 4 組合型別](Notes/Chapter%204%20組合型別.md)|
 | Chapter 5 函式 | Shawn |2022-10-13| [Chapter 5 函式](Notes/Chapter%205%20函式.md)|
-| Chapter 6 方法 | Stanley || [Chapter 6 方法](Notes/Chapter%206%20方法.md)|
+| Chapter 6 方法 | Stanley |2022-10-27| [Chapter 6 方法](Notes/Chapter%206%20方法.md)|
 | Chapter 7 介面 | Barney || [Chapter 7 介面](Notes/Chapter%207%20介面.md)|
 | Chapter 8 Goroutine 與 Channel | Sunny || [Chapter 8 Goroutine 與 Channel](Notes/Chapter%208%20Goroutine%20與%20Channel.md)|
 | Chapter 9 共用變數並行性 | Gordon || [Chapter 9 共用變數並行性](Notes/Chapter%209%20共用變數並行性.md)|
