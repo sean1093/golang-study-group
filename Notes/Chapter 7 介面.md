@@ -766,7 +766,7 @@ func main() {
 ```
 func Reverse(data Interface) Interface
 ```
-不過這裡只能用sort提供的三種類型```StringSlice``` ```IntSlice``` ```Float64Slice```來使用```Reverse()，這些類型實作了 sort package 中定義用來比較和交換的 Interface
+不過這裡只能用sort提供的三種類型```StringSlice``` ```IntSlice``` ```Float64Slice```來使用```Reverse()```，這些類型實作了 sort package 中定義用來比較和交換的 Interface
 
 範例：
 ```
@@ -882,7 +882,7 @@ func throw() error {
 	}
 }
 ```
-呼叫run()：
+呼叫throw()：
 ```
 func main() {
 	if err := throw(); err != nil {
@@ -892,6 +892,6 @@ func main() {
 ```
 執行結果：
 ```
-This is error circumstance
+This is circumstance
 The time is:2022-11-24T03:58:56+08:00
 ```
