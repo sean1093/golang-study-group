@@ -18,7 +18,7 @@
 4. 利用 interface 可實現泛型、多型的功能，從而可以調用同一個函數名的函數但實現完全不同的功能。
 
 ## 7.2 介面基本用法
-- 如何宣告
+- **如何宣告**
 
 用type來宣告interface
 
@@ -33,7 +33,7 @@ type BankAccount interface {
 ```
 可以看到裏面宣告了三個方法，不過現在也只有定義並沒有實踐
 
-- 如何實踐
+- **如何實踐**
 
 Golang 中如果自定義型態實現了 interface 的所有方法，那麼它就會認定該自定義型態也是 interface 型態的一種
 
@@ -159,7 +159,7 @@ func (c *CtbcAccount) Withdraw(amount int) error {
 	return nil
 }
 ```
-可以看到ctbc這銀行在領錢的時候會多一層手續費，多一個```fee```屬性，並在```Withdraw()```方法的實作內會多扣掉這個```fee```
+可以看到ctbc這銀行在領錢的時候會多一層手續費，多一個```fee```欄位，並在```Withdraw()```方法的實作內會多扣掉這個```fee```
 
 讓我們回到```main.go```裡面去看，同樣對兩間銀行做存錢領錢的動作，帳戶會剩多少錢
 
@@ -248,6 +248,8 @@ func main() {
 有沒有覺得空介面其實很像```泛型(generics)```
 
 [Go 1.18](https://tip.golang.org/doc/go1.18#generics)加入的泛型(generics)新增了一個關鍵字```any```作為空介面```interface{}```的別名，所以之後改用```any```即可
+
+這個範例宣告一個map，而map的值可以是任何型態
 ```
 m := make(map[int]any)
 m["a"] = 123
@@ -279,7 +281,7 @@ abc
 ```
 
 ## 7.4 以介面為合約
-上面有提到```Println```方法，這邊來看一下```fmt```的三個函式的源碼
+上面有提到```Println```方法，這邊來看一下```fmt```的另外三個函式的源碼
 ```
 package fmt
 func Fprintf(w io.Writer, format string, a ...any) (n int, err error)
@@ -320,8 +322,8 @@ func (f *File) Write(b []byte) (n int, err error) {
 所以任何有實作```io.Writer```介面的具體型別都可以當成實作替換的參數
 
 ## 7.5 介面嵌入介面
-剛剛有提到```Writer```介面
-現在再來看一下另外兩個
+
+剛剛有提到```Writer```介面，現在再來看一下另外兩個
 ```
 package io
 
@@ -366,7 +368,7 @@ type ReadWriter interface {
 
 介面零值的型別和值皆為nil
 
-這裡再舉例一個fmt套件庫的重要介面
+這裡再舉例一個fmt套件庫的重要介面來做範例介紹
 ```
 package fmt
 
