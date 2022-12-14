@@ -21,7 +21,7 @@ https://www.tenlong.com.tw/products/9789864761333
 | Chapter 5 函式 | Shawn |2022-10-13| [Chapter 5 函式](Notes/Chapter%205%20函式.md)|
 | Chapter 6 方法 | Stanley |2022-10-27| [Chapter 6 方法](Notes/Chapter%206%20方法.md)|
 | Chapter 7 介面 | Barney |2022-11-24| [Chapter 7 介面](Notes/Chapter%207%20介面.md)|
-| Chapter 8 Goroutine 與 Channel | Sunny || [Chapter 8 Goroutine 與 Channel](Notes/Chapter%208%20Goroutine%20與%20Channel.md)|
+| Chapter 8 Goroutine 與 Channel | Sunny |2022-12-08| [Chapter 8 Goroutine 與 Channel](Notes/Chapter%208%20Goroutine%20與%20Channel.md)|
 | Chapter 9 共用變數並行性 | Gordon || [Chapter 9 共用變數並行性](Notes/Chapter%209%20共用變數並行性.md)|
 | Chapter 10 套件與工具 | Jenny || [Chapter 10 套件與工具](Notes/Chapter%2010%20套件與工具.md)|
 | Chapter 11 測試 | Cheng-Ying || [Chapter 11 測試](Notes/Chapter%2011%20測試.md)|
