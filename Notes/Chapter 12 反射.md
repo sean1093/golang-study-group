@@ -4,8 +4,8 @@
 - 12.1 為何需要Reflection
 - 12.2 reflect.Type and reflect.Value
 - 12.3 輸出值的Display function
-- 12.4 Example: SExpr encode
 - 12.5 reflect.Value 設置變數
+- 12.4 Example: SExpr encode
 - 12.6 Example: SExpr decode
 - 12.7 存取struct欄位標籤
 - 12.8 顯示型別方法
@@ -54,7 +54,7 @@
 
 ## 12.2 reflect.Type and reflect.Value
 
-reflect 套件提供兩個重要的型別: Type and Value。對應到了7.5節中型別描述的值。 e.g.,
+* reflect 套件提供兩個重要的型別: Type and Value。對應到了7.5節中型別描述的值。 e.g.,
 ```
           ___________________                    os.File
     Type |      *os.File     |                  ____________________
@@ -63,18 +63,17 @@ reflect 套件提供兩個重要的型別: Type and Value。對應到了7.5節�
          |___________________|                 |____________________|
 
 ```
-Note: Type為一個interface裡面含有許多方法，而Value為一個struct用來保存型別的值
-因此我們可以reflect.TypeOf(x) 與 reflect.ValueOf(x) 來取得變數x在runtime時的型別與值。Value 的值也可以通過interface()的function來還原成原來的type。
+ Note: Type為一個interface裡面含有許多方法，而Value為一個struct用來保存型別的值因此我們可以reflect.TypeOf(x) 與 reflect.ValueOf(x) 來取得變數x在runtime時的型別與值。Value 的值也可以通過interface()的function來還原成原來的type。
 ```
 func main() {
 	var x interface{} = 3
 	t := reflect.TypeOf(x)      // reflect.Type
 	fmt.Println(t.String())     // "int"
 	fmt.Println(t)              // "int"
-	fmt.Printf("%T\n", 3)       // "int"
+	fmt.Printf("%T\n", x)       // "int"
 	v := reflect.ValueOf(x)     // reflect.Value
 	fmt.Println(v)              // "3"
-	fmt.Printf("%v\n", v)       // "3"
+	fmt.Printf("%v\n", x)       // "3"
 	fmt.Println(v.String())     // "<int Value>"
 	r := v.Interface()          // interface{}
 }
@@ -126,6 +125,10 @@ func Sprintf(x interface{}) string {
 ```
 
 ## 12.3 輸出值的Display function
+* reflect.Value.Index(i) 回傳第i個元素的 reflect.Value值
+* reflect.Value.Field(i) 回傳struct第i個field的 reflect.Value值
+* reflect.Value.MapIndex(key) 回傳key對應元素的 reflect.Value值
+* reflect.Value.Elem() 回傳point的 reflect.Value值
 
 ```
 func Display(name string, x interface{}) {
@@ -169,17 +172,13 @@ func display(path string, v reflect.Value) {
 	}
 }
 ```
-* Index(i) 回傳第i個元素的 reflect.Value值
-* Field(i) 回傳struct第i個field的 reflect.Value值
-* MapIndex(key) 回傳key對應元素的 reflect.Value值
-* Elem() 回傳point的 reflect.Value值
 
 
 # 12.5 reflect.Value 設置變數
 
 * 不可定址的reflect.Value不可以設定值 (但可定址不一定能設定)
-* reflect.ValueOf(&x).Elem() 來取的原先變數的值
 * 通過CanSet() 與 CanAddr() function 來確定reflect.Value 可不可以被更改與被定址
+* reflect.ValueOf(&x).Elem() 來取的原先變數的值
 * 通過SetBool(), SetInt(), SetString() 來設定值
 
 ```
@@ -200,7 +199,7 @@ func main() {
 	fmt.Printf("0x%x\n", c.Addr())  // 0xc000012088
 	x = 3
 	fmt.Printf("%d\n", a)           // 2
-	fmt.Printf("%d\n", d)           // 3
+	fmt.Printf("%d\n", c)           // 3
 
 	c.SetInt(4)
 	fmt.Printf("%d\n", x)           // 4
@@ -455,7 +454,7 @@ func main() {
 # 12.8 顯示型別方法
 
 ```
-ex: func (d Duration) Round(m Duration) Duration {
+ex: func (d Duration) Round(m Duration) Duration {}
 
 func main() {
 	a := time.Hour
@@ -464,8 +463,8 @@ func main() {
 	fmt.Println(v.NumMethod())
 	for i := 0; i < v.NumMethod(); i++ {
 		m := v.Method(i)
-		fmt.Println("function name: ", v.Type().Method(i).Name)	//	function name: Round
-		fmt.Println("function type: ", m.Type())				//	function type: func(time.Duration) time.Duration
+		fmt.Println("function name: ", v.Type().Method(i).Name)	// function name: Round
+		fmt.Println("function type: ", m.Type())		// function type: func(time.Duration) time.Duration
 	}
 }
 
