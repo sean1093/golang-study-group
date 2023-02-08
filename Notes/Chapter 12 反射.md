@@ -11,6 +11,7 @@
 - 12.8 顯示型別方法
 - 12.9 注意事項
 
+
 ## 12.1 為何需要Reflection
 
 撰寫一個方法統一處理並未有共通介面、已知表示、或是在設計函式時尚不存在的值的時候需要使用。
@@ -174,7 +175,7 @@ func display(path string, v reflect.Value) {
 ```
 
 
-# 12.5 reflect.Value 設置變數
+## 12.5 reflect.Value 設置變數
 
 * 不可定址的reflect.Value不可以設定值 (但可定址不一定能設定)
 * 通過CanSet() 與 CanAddr() function 來確定reflect.Value 可不可以被更改與被定址
@@ -227,7 +228,7 @@ func main() {
 
 ```
 
-# 12.4 Example: SExpr encode
+## 12.4 Example: SExpr encode
 SExpr 結構:
 * 整數: 42
 * 字串: "hello"
@@ -314,7 +315,7 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 }
 
 ```
-# 12.6 Example: SExpr decode
+## 12.6 Example: SExpr decode
 
 ```
 type lexer struct {
@@ -430,7 +431,7 @@ func endList(lex *lexer) bool {
 }
 ```
 
-# 12.7 存取struct欄位標籤
+## 12.7 存取struct欄位標籤
 
 ```
 type datas struct {
@@ -451,7 +452,7 @@ func main() {
 	}
 }
 ```
-# 12.8 顯示型別方法
+## 12.8 顯示型別方法
 
 ```
 ex: func (d Duration) Round(m Duration) Duration {}
@@ -469,7 +470,7 @@ func main() {
 }
 
 ```
-# 12.9 注意事項
+## 12.9 注意事項
 
 小心使用反射的三個原因:
 
