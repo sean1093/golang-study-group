@@ -25,7 +25,7 @@ https://www.tenlong.com.tw/products/9789864761333
 | Chapter 9 共用變數並行性 | Gordon |2022-12-22| [Chapter 9 共用變數並行性](Notes/Chapter%209%20共用變數並行性.md)|
 | Chapter 10 套件與工具 | Jenny |2023-01-05| [Chapter 10 套件與工具](Notes/Chapter%2010%20套件與工具.md)|
 | Chapter 11 測試 | Cheng-Ying || [Chapter 11 測試](Notes/Chapter%2011%20測試.md)|
-| Chapter 12 反射 | Steve || [Chapter 12 反射](Notes/Chapter%2012%20反射.md)|
+| Chapter 12 反射 | Steve |2023-02-09| [Chapter 12 反射](Notes/Chapter%2012%20反射.md)|
 | Chapter 13 低階程式設計 | Jean || [Chapter 13 低階程式設計](Notes/Chapter%2013%20低階程式設計.md)|
 
 ### 第二部分: Project Sharing
