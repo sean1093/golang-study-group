@@ -12,7 +12,7 @@
 ## The go test Tool
 
 The `go test` subcommand is a test driver for Go packages that are organized according to certain
-conventions. In a package directory, files whose names end with `_test.go` are not part of  the package ordinarily bui lt by `go build` but are a part of it when built by `go test`.
+conventions. In a package directory, files whose names end with `_test.go` are not part of the package ordinarily bui lt by `go build` but are a part of it when built by `go test`.
 
 Three kinds of functions in `_test.go`:
 - test functions: verify logic
@@ -547,6 +547,8 @@ $ go test -cpuprofile=cpu.out
 $ go test -blockprofile=block.out
 $ go test -memprofile=mem.out
 ```
+
+https://stackoverflow.com/questions/32571396/pprof-and-golang-how-to-interpret-a-results
 
 <img src="/Users/chengying_chang/Trender/projects/golang-study-group/Notes/res/profiling.png" width="600"/>
 
